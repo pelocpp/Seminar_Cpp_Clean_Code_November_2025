@@ -1,4 +1,4 @@
-# C++ Clean, Performant and Secure Programming Techniques
+# C++ Clean Code Programming Techniques
 
 ---
 
