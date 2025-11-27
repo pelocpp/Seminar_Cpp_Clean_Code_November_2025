@@ -41,14 +41,12 @@ b) Visual Studio Community 2022
 
 ToDo Liste:
 
-== Virtueller Basisklassen Destruktor  - jepp.
-
 Smart Pointer // std::shared_ptr // std::unique_ptr
        ==> std::weak_ptr
-
-
-       
+     
 Besucher // Visitor
+
+RAII
 
 =======================================================
 
@@ -416,4 +414,190 @@ b) Beispiel / Motivation:
   Es gibt bei der is-a Beziehung SEHR SELTEN Abweichungen zum Entwurf.  // Barbara Liskov
 
   ======================================================================
+
+  Frage:
+
+  Methode ist in der Entwicklung ...
+
+  Komplizierteres ... Hmm, das wird nichts .....
+
+  ==> Neu schreiben // nochmals damit von vorne anfangen ...
+
+  ==> kann man das eine oder anderen in ein Unterprogramm(-methode) auslagern
+  
+  ==> Bausteine ....
+
+  ======================================================================
+
+ Interfaces: >> Abstraktion
+
+ YAGNI
+
+ Zum Testen: 
+
+ DRY:   ==> Haben wir das eine oder andere nicht in der STL ???
+
+ Copy&Paste.
+
+ ==> Abgabe // extr. Zeitdruck:
+
+     Klasse 1 Fehler: Wurde nach 3 Tagen gefixed...
+
+Usache: Ein Fehler wurde mit Copy & Paste wiederholt ...
+
+POLS
+
+===================================================================
+
+const:
+
+Wichtig oder nicht ??????????????????????????????????????
+
+Auf eine Methode angewendet:
+
+01: class Person
+02: {
+03: private:
+04:     std::string   m_name;
+05:     size_t        m_age;
+06: 
+07: public:
+08:     Person() = default;
+09:     Person(const std::string& name, size_t age)
+10:         : m_name{ name }, m_age{ age }
+11:     {}
+12: 
+13:     std::string getName() const { return m_name; }  // hier const auf die Methode angewendet ..
+14:     size_t getAge() const { return m_age; }
+15: };
+
+
+const bedeutet hier (Lesbarkeit): Das Person-Objekt bleibt unverändert !
+
+Noch was anderes ???
+
+ii) Wenn ich aus Versehen ändern sollte, dann warnt mich der Compiler !!! Error.
+
+iii) OO Programmierung
+
+     Funktionale Programmierung  ==> Werbung: Performanz.
+
+     CPU:  Reordering der CPU Befehle // CPU Pipelining // Performanz  // Parallelisierung ganz tief unten.
+
+     Warum geht das: Kein STATE
+
+     C++: Hmm, Problem der Instanzvariablen.
+
+     Code-Generator // -Optimizer: Welche Methoden kann ein Optimizer am besten optimieren: 
+     Solche, die den State nicht verändern: 'const'
+
+     Fazit:  'const' ==> Optimizer  // Yes  // Hint
+
+==============================================================
+
+01: class Person
+02: {
+03: private:
+04:     std::string   m_name;
+05:     size_t        m_age;
+06: 
+07: public:
+08:     Person() = default;
+09:     Person(const std::string& name, size_t age)
+10:         : m_name{ name }, m_age{ age }
+11:     {}
+12: 
+13:     std::string getName() const { return m_name; }
+14:     size_t getAge() const { return m_age; }
+15: };
+
+Gute Klasse / schlechte Klasse ???
+
+Zeile 13: Hmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+
+const std::string& getName() const { return m_name; }
+
+Eine kleine Frage verbunden: Wie lange ist diese Referenz gültig ???
+
+So lange das Objekt Person lebt.
+
+==========================================================================
+
+STL
+
+Why:  Better // Clean Clode relies upon STL
+
+Robustheit
+
+Walk-Through ...
+
+
+STL:
+
+== Container
+== Iteratoren
+== Algorithmen
+== Aufrufbare Objekte (Funktor)
+
+=> Transparenz
+
+==========================
+
+Jeder STL Container verwaltet seine Daten nach bestimmten Regeln.
+
+NICHT alle Regeln sind publiziert // beschrieben.
+
+std::vector:  Die Daten liegen DICHT aneinander. // ALLE 
+
+std::list:    Hier liegen die Daten im Stile einer Linked List im Speicher.
+
+Hash-Tabelle:  Python: Dictionary
+
+               std::unordered_map
+
+std::map:      Balancierter Baum  // Red-Black Tree
+
+
+std::vector
+
+6, 9, 13, 19, 28, 42, 63
+
+neuer Wert = alter Wert * 1.5;
+
+===================================================
+
+STL Container
+
+Operator[]:  Dieser geht nur bei "sequentiellen" Container:
+
+   Daten liegen DICHT im Speicher.
+
+==> Go for "Iteratoren"
+
+Was ist ein STL Iterator ???
+
+Man kann auch "Position" sagen.
+
+Ein Iterator beschreibt eine Position in einem Container.
+
+Vorsicht: Eine Position ist NICHT gleich dem WERT an dieser Position.
+
+Offensichtlich hat jeder STL Container einen eigenen Typ für derartige Positionen.
+
+
+Welches kOnzept haben Iteratoren:
+
+3 Methoden:
+
+Next
+ValueOf
+Equals
+
+C++:  Konzept des Überladens von Operatoren:
+
+operator ++
+operator *
+operator ==
+
+
 
