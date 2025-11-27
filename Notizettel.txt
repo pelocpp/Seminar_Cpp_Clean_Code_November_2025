@@ -4,6 +4,416 @@ Seminar "Clean Code"
 
 Peter Loos
 
+30+ Jahren
+
+C/C++,  Java, C#,  Mobile Progr. (Java) // Android, JavaScript (Python)
+
+   Rust
+
 Guten Morgen
 
+10.30 //  12.30 // ca. 15 Uhr  // 17 Uhr.
+
 // =========================================================
+
+2 Tools:
+
+a) Unterlagen
+
+Github
+
+https://github.com/pelocpp
+
+https://github.com/pelocpp/Seminar_Cpp_Clean_Code_November_2025
+
+oder auch das Original:
+
+https://github.com/pelocpp/cpp_clean_performant_secure
+
+
+https://github.com/pelocpp/cpp_design_patterns
+
+
+
+b) Visual Studio Community 2022
+
+=======================================================
+
+ToDo Liste:
+
+== Virtueller Basisklassen Destruktor  - jepp.
+
+Smart Pointer // std::shared_ptr // std::unique_ptr
+       ==> std::weak_ptr
+
+
+       
+Besucher // Visitor
+
+=======================================================
+
+Clean Code C++
+
+"Sauberer Code"
+
+2 Flughöhen:
+
+Von Oben:   Entwurf, Idiome, Design Pattern, 
+
+Im Inneren: Elemente der Sprache, die Clean Code ermöglichen (Modern C++)
+
+// Classic C++  // Modern C++ (C++ 11)
+
+
+== Was sind meine Erwartungen
+
+== Wo stehe ich in C++
+
+== Was MUSS drin sein
+
+== Ein Überblick tut es auch 
+
+== Welche Sprachen spreche ich :)
+
+// Misra, sauberer Code, 
+
+// Kein Heap, Design Pattern, STL 
+
+std::vector
+
+STL:  Algorithmen   std::copy, std::transform, std::generate  // Lambda
+
+=========================================================
+
+Schnittstelle:
+
+  Kontrakt, Vertrag
+
+  Dieser ist an anderer Stelle zu implementieren.
+
+Abstrakte Klasse:  Unvollständige Klasse
+
+============================================================
+
+Single Responsibility Prinzip (SRP)
+
+Open-Closed Prinzip:
+
+============================================================
+
+== Habe Methoden / Klassen für einen bestimmten Anwendungsfall.
+
+== Es kommen neue Anforderungen hinzu.
+
+
+Wie löst man das ???
+
+== Man versuche, vorhandene konkrete Realisierungen (methoden) durch eine Schnittstelle zu abstrahieren.
+
+== Dadurch wird es "allgemeiner"
+
+== Aufbauende Module können auf den Schnittstellen aufsetzen
+
+== Es findet eine Entkopplung statt !!!
+                  ===========
+
+============================================================
+
+Kann man "vordenken"  // Antizipatorischens Verhalten
+
+Gratwanderung:   Könnte sich an dieser Stelle etwas ändern  
+
+============================================================
+
+Dependency Inversion Prinzip
+----------------------------
+
+„High-Level”-Module  ==> „Low-Level”-Module
+
+Wenn Low-Level die Schnittstelle ändert: Problem ===> „High-Level”
+
+==================================================
+
+struct Point
+{
+   int m_x;
+   int m_y;
+}
+
+
+FamilyTree ==> Relationships   // Enge Kopplung   ==>   Lose Kopplung
+
+Besser:
+
+FamilyTree ==> IRelationshipBrowser
+
+Relationships  ==> IRelationshipBrowser
+
+==================================================
+
+Design Pattern:
+---------------
+
+Vorab:
+
+== Text
+
+== Bild
+
+== Konzeptionelle Beispiel
+
+== Real-World Beispiel
+
+======================================================
+
+Adapter
+-------
+
+Ermöglicht die Interaktion von Objekten mit inkompatiblen Schnittstellen.
+
+== Ansprechen von inkompatiblen Methoden
+== Benötige Zwischenschicht (KEINE Bibliothek): Hüllenobjekt (Wrapper)
+
+   Ein Adapter ist ein Wrapper (Hüllenobjekt) um ein inkompatibles Objekt
+
+Beispiel:
+
+==: JSON
+==> Daten:  XML
+==> Daten:  JAML
+
+Wiedervewenbare Lösung
+
+==========================================
+
+Strategy Pattern:
+-----------------
+
+== Ermöglicht den Austausch von Methoden
+
+== Umbiegen von Aufrufen an bestimmte Realisierungen 
+
+Beispiel:
+
+UI Bibliothek:
+
+== Kann zeichnen via GDI
+== Kann zeichnen via Qt
+
+a) draw (GDIContext) ........ Hmmm, diese Methode hängt von der Ausgabe DIREKT ab.
+
+b) draw (Rectangle r)  .... Hmmm, wohin ???
+
+   draw ==> Interface:
+
+       interface IDraw:
+          draw ();
+         
+        2 Mal realisieren:
+
+        GDILibrary : public IDraw
+
+        QtLibrary :  public IDraw
+
+    Dies ist eine Umsetzung des Strategy - Pattern.
+
+std::function:  
+
+Ist ein Hüllenobjekt. Die Template Parameter beschreiben die SIGNATUR der gekapselten Methode.
+
+Worum: Um quasi ALLES, was in C++ aufgerufen werden kann.
+
+======================================================
+
+Adapter
+Strategy
+Template Method
+
+Template Method Pattern:   Einfach und Cool.
+
+
+Beispiel:
+
+Tetris 
+
+Was haben alle 7 Figuren von Tetris während des Spielablaufs gemeinsam?
+
+== Haben eine bestimmte Geometrie
+
+== Sie bewegen sich auf eine bestimmte Weise identisch:
+
+  -- nach links
+  -- nach rechts
+  -- nach unten
+  -- drehen
+  -- irgendwann ist die Bewegung zu Ende.
+
+    Was ist das im Prinzip: Eine schablonenhafte Methode für ALLE Figuren.
+
+    Template Method Pattern.
+
+========================================================
+
+Wann Adapter
+
+Wann Strategy
+
+Wann Template Method
+
+
+Alle haben mit Methoden zu tun:
+
+Adapter ===> Zielmethode ist DIREKT nicht aufrufbar
+
+Template Methode ==> Kann einen allgemeinen Ablauf in EINER Methode vorgeben / festlegen.
+
+Strategy ==> Austauschbarkeit von Funktionalität // Verhalten kann geändert werden.
+
+// =========================================================
+
+Allgemein:
+
+a) Ein Pattern ist eine Hilfestellung.
+
+b) Wie sehr muss ich mich an die Vorgaben halten???
+
+c) Kollegen sollten das Pattern "wieder erkennen"
+
+d) Abweichungen sind grundsätzlich möglich // man sollte sie begründen können.
+
+  Am Ende: Es sollte die grundlegende Idee nicht geändert werden.
+
+// =========================================================
+
+Proxy:
+
+Single Responsibility Idiom
+
+
+Hülle: Ein Proxy kann als Hülle aufgefasst werden.
+
+Diese kann zusätzliche Funktionalitäten erbringen,
+die das Zielobjekt (SRP) unberührt lassen.
+
+Lazy Loading
+Eager Loading
+
+Lazy: Faul // On Demand
+Eager: Gierig
+
+Smartphone // Embedded Device
+
+Bilder Gallerie  // 10.000   // On Demand
+
+== Durch wischen  // swipen   // Klein-Darstellung  // Thumb Nails // Ersatzdarstellung
+
+Ein Bild: Benötigt viele Resources.
+
+NICHT vorstellbar ist: Jedes Bild wird geladen.
+
+==============================================================
+
+Virtueller Konstruktor
+
+// Prototype Pattern
+
+Cooles Pattern
+
+Erstelle eine Kopie eines Objekts durch einen Zeiger auf seinen Basistyp     Uhhhhhhhhhhh
+
+
+a) Erstelle eine Kopie eines Objekts:    Kopier-Konstruktor
+
+   Das ist nicht das Problem / die Frage ??????????
+
+b) Beispiel / Motivation:
+
+   Spieleprgrammierung.
+
+   ChessFigure* board [8][8];
+
+   Bauer:   Pawn
+   Turm:    Rook
+   König:   King
+   Dame:    Queen
+   Läufer:  Bishop
+
+   class Pawn : public ChessFigure
+   class Rook : public ChessFigure
+
+   Nächste Schritt: Versuche // Zukunft :
+
+       Kopie vom aktuellen Schachbrett: 
+
+
+     ChessFigure*  copy[8][8] = board;   // 64 ChessFigure* Adressen / Pointer
+
+     Will man hier Adressen kopieren ?????????????? Nein.
+
+     Man will auch von den Figuren eine Kopie haben.  ====>  board[0][0]
+
+     Ich will das Objekt, auf das der ZEIGER  board[0][0] zeigt, KOPIEREN.
+
+     
+     Das Kind ConcretePrototype leitet von Prototype ab.
+     Deswegen geht das.
+
+     ==============================================================
+
+     Clean Code:
+
+     Vererbung:   
+
+     Wann setzt man Vererbung ein ???????????????????????
+
+     Wenn man sich Methoden teilen möchten
+     Wiederverwendung von Code
+     Wenn es einen Hierarchie gibt ...
+
+     Hilfestellung für diese Beobachtungen:
+     -------------
+
+     Klasse Rectangle
+     Klasse ColoredRectangle
+
+     Satz: Ein ColoredRectangle ist ein Rectangle
+
+        Es gibt im Entwurf von SW Beziehungen // Relationsships:
+
+        is-a Relationship // ist-ein Beziehung ===========>  Vererbung
+
+    Klasse Point
+    Klasse Line
+
+    Satz: 
+
+        Eine Linie hat viele Punkte
+
+        Eine Linie ist ein Punkt : No
+        Ein Punkt ist eine Linie:  No
+
+        Eine Linie hat einen Anfangs- und Endepunkt.
+
+        has-a Relationship // hat-ein Beziehung ===========>  Instanzvariablen
+
+        Es sollte nur das eine Instanzvariable sein, was unbedingt benötigt wird.
+
+        class Line
+        {
+             Point m_begin;
+             Point m_end;
+             int   i;           // NOOOOOOOOOOOOOOOO
+             int   m_length;    // computed // computable property  // NOOOOOOOOOOOOOOOOO
+                                // hmmmm, Berechnung dauert EXTREM lange ...
+        }
+
+
+
+  // class Line : public Point 
+  // {
+  // }
+
+  Es gibt bei der is-a Beziehung SEHR SELTEN Abweichungen zum Entwurf.  // Barbara Liskov
+
+  ======================================================================
+
