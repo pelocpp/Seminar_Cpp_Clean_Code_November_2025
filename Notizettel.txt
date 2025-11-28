@@ -4,6 +4,11 @@ Seminar "Clean Code"
 
 Peter Loos
 
+peter.loos@gmx.de
+-----------------
+
+https://github.com/pelocpp
+
 30+ Jahren
 
 C/C++,  Java, C#,  Mobile Progr. (Java) // Android, JavaScript (Python)
