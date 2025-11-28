@@ -383,7 +383,7 @@ namespace BookStoreUsingTypeErasure {
 
 // =====================================================================================
 
-void main_type_erasure()
+void book_store()
 {
     using namespace BookStoreUsingDynamicPolymorphism;
     using namespace BookStoreUsingTypeErasure;

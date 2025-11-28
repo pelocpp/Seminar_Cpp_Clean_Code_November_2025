@@ -128,6 +128,8 @@
     <ClCompile Include="Topic_01_STL.cpp" />
     <ClCompile Include="Topic_02_Lambda.cpp" />
     <ClCompile Include="Topic_03_GenericFunctions.cpp" />
+    <ClCompile Include="Topic_04_Initializer_List.cpp" />
+    <ClCompile Include="Topic_05_Weak_Ptr.cpp" />
     <ClCompile Include="Topic_10_Bookstore.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -795,5 +795,74 @@ Lambda, Gen. Funktionen:
 
 Vieles wird auf Vorhandenes umgesetzt.
 
-13.45
-=====
+=========================================================
+
+std::vector:           Daten: HEAP
+
+std::initializer_list: Daten: STACK
+
+Ersparnis: 50%
+
+=========================================================
+
+std::weak_ptr
+
+Wozu ????????????????????????????
+
+std::shared_ptr:  >>>>> Hmmm, dieser funktioniert nicht IMMER ????????
+
+                 Der Speicher wird nicht in JEDEM Fall freigegeben // Puhhhhhh
+
+a) Technik des Weak-Ptr
+
+b) Was ist das Problem ??????????
+
+Zyklen:
+------
+
+Haben wir die ??? Observer-Pattern:
+
+a) Ein Observer kennt sein Subject.  // Shared_Ptr
+
+b) Ein Subject kennt ein oder mehrere Observer  // Shared_Ptr
+
+          Aber: IN dem Subject halten wir eine LISTE von Observern:  weak_ptr
+
+          Notify >>= Empty.
+
+Guidelines für Smart Pointer
+----------------------------
+
+A) nur Unique_Ptr:  Geht !!!
+
+b) nur Shared_Ptr:  SW läuft prinzipiell, aber werden alle Objekte freigegeben: ????
+
+c) Frage: 
+
+   Hmm, will auf ein vorhandenes Objekt zugreifen:
+
+   i) Kopie des Pointers in einer Shared_Ptr-Variablen:
+
+               Diese Kopie stellt einen BESITZER dar // OWNER
+
+            Neeee
+
+            Visualisierung:   Prozessdaten visualiseren.
+
+            Prozessdaten: Shared_Ptr
+
+            Visualisierung: Will diese eine Shared_Ptr in die Hand nehmen 
+
+            Neeeeeeeeeeeee:  Weak_ptr
+
+            Weak_ptr  ==> lock ==> empty
+
+============================================================
+
+
+
+
+
+
+
+

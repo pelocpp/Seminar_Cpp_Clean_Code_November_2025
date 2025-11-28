@@ -11,6 +11,7 @@
 #include <mutex> 
 #include <print>
 #include <string>
+#include <vector>
 
 namespace CleanCodeGuidelines_ModernCpp {
 
@@ -22,14 +23,17 @@ namespace CleanCodeGuidelines_ModernCpp {
 
         static void guidelines_keyword_auto_01()
         {
+            std::pair<int, std::string> entry;
+
             std::map<int, std::string> aMap{ { 1, "Hello"  } };
 
             std::map<int, std::string>::iterator it{ aMap.begin() };
 
-            // std::pair<int, std::string>& entry1{ *it };  // Why this line DOES NOT compile ???
+            std::pair<const int, std::string>& entry1 = *it;  // Why this line DOES NOT compile ???
 
-            auto& entry2{ *it };
+            auto& entry2 = *it;   // Typableitung
         }
+
 
         class Person
         {
@@ -40,13 +44,14 @@ namespace CleanCodeGuidelines_ModernCpp {
             Person() = default;
             Person(const std::string& name) : m_name{ name } {}
 
-            const std::string& getName() const { return m_name; }
+            const std::string& getName() const { return m_name; }  // Performanter Getter
         };
 
+        // Stolperfalle: Vorsicht
         static void guidelines_keyword_auto_02()
         {
             Person jack{ "Jack" };
-            auto name = jack.getName();
+            /*const*/ auto& name = jack.getName();  // Welchen Typ hat die Variable 'name' // Typableitung
         }
 
         // =======================================================================
@@ -107,8 +112,35 @@ namespace CleanCodeGuidelines_ModernCpp {
 
         static Foo createFooOject() { return {}; }
 
+        struct Point
+        {
+            int x;
+            int y;
+        };
+
+        static void guidelines_uniform_syntax()
+        {
+            // VORSICHT:
+            std::vector<int> v1( 10 );  // Size: 10, Elemente alle: 0
+            std::vector<int> v2{ 10 };  // Size: 1,  Element : 10
+
+
+
+            Point p{};
+
+            float x1 = 123.45;
+
+            float x2{ 123.45 };
+
+            double d = 123.45;
+
+            float x3 = d;  // Whyyyyyyyyyyyyyyyyy cvtsd2ss
+        }
+
+
         static void guidelines_keyword_auto_left_to_right_initialization_syntax()
         {
+            
             auto var1 = 0;
             auto var2 = Foo{};
             auto var3 = createFooOject();
@@ -428,6 +460,8 @@ namespace CleanCodeGuidelines_ModernCpp {
 
 void clean_code_guidelines_modern_cpp()
 {
+    CleanCodeGuidelines_ModernCpp::Keyword_Auto_Left_to_Right_Initialization_Syntax::guidelines_uniform_syntax();
+
     CleanCodeGuidelines_ModernCpp::Keyword_Auto::guidelines_keyword_auto();
     CleanCodeGuidelines_ModernCpp::Keyword_Auto_Left_to_Right_Initialization_Syntax::guidelines_keyword_auto_left_to_right_initialization_syntax();
     CleanCodeGuidelines_ModernCpp::Keyword_Const_Auto_References::guidelines_keyword_const_auto_references();
