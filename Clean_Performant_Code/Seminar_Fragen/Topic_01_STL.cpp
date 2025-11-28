@@ -66,9 +66,9 @@ static void stl_02()
     numbers.push_back(3);
 
     // Typ eines Iterators
-    //std::list<int>::iterator pos = numbers.begin();
+    std::list<int>::iterator pos = numbers.begin();
     // oder
-    auto pos = numbers.begin();
+   // auto pos = numbers.begin();
 
 
     if (pos == numbers.end()) {

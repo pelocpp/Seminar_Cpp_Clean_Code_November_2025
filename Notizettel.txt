@@ -859,10 +859,184 @@ c) Frage:
 
 ============================================================
 
+RAII
+
+Konstruktor
+Destruktor
+
+Hüllenobjekt:
+
+Resources:
+
+Socket; Mutex; FILE; SqlConnection; GDI Handle
+
+== open, lock, open
+== close, unlock, close
+
+std::mutex m;
 
 
+lock
+locks the mutex, blocks if the mutex is not available
+
+unlock
+unlocks the mutex
+
+ACHTUNG: 
+
+Prinzipiell richtig
 
 
+while ....... 
+
+m.lock();
+// kritischer Anweisung  // break;  // throw 
+m.unlock();
+
+Idiom   // Clean Vorgehensweise:
+
+a) std::mutex m;  // m wird quasi überhaupt nicht verwendet
+
+b) Statt dessen: Eine Hülle:  std::lock_guard
+
+c) Konsrtuktor // Destruktor
 
 
+void safe_increment(int iterations)
+{
+    const std::lock_guard<std::mutex> lock(g_i_mutex);   // Hülle  // Wo ist lock // unlock
+                                           // constructs a lock_guard, optionally locking the given mutex
 
+    while (iterations-- > 0)
+        g_i = g_i + 1;
+
+    // g_i_mutex is automatically released when lock goes out of scope
+    // destructs the lock_guard object, unlocks the underlying mutex
+}
+ 
+============================================================
+
+std::string ==> Hält die Daten der Zeichenkette auf dem HEAP
+
+Abhilfe:
+
+std::string_view: Wo hält diese die Daten ??? Depends :)
+
+Gegenfrage: Wo liegt "AAAAAAAAAAAAA" im Speicher ???
+
+"AAAAAAAAAAAAA"
+
+const char* cp = "AAAAAAAAAAAAA";
+
+a) cp liegt am STACK.
+
+b) globalen Datensegment // Code-Segment 
+
+c) NICHT: HEAP
+
+
+std::string_view sv { "asdasdasdadasd" };
+
+std::string_view: Hülle:
+
+a) Pointer der Anfangsadresse
+b) Länge
+
+Ein improved const char* Pointer:
+
+============================================================
+
+============================================================
+
+C-Style Array:  FIXED-SIZE ARRAY
+
+  int numbers [10];
+
+Klasse std::array  FIXED-SIZE ARRAY
+
+  std::array <int, 10> numbers;
+
+Clean Code: Go for Klasse std::array.
+
+a) STL Container
+
+b) at-Methode // Range-Check
+
+c) Length 
+
+  printArray (int* ptr)  ===> printArray (numbers)
+
+  printArray (int* ptr, int len)  ===> printArray (numbers, 10)
+
+d) Kleines Problem: Template-Klasse:
+
+    static void print(const std::array<int, 5>& array) {
+        std::println("Length: {}", array.size());
+    }
+
+    Hmmm, das ist auf die Schnelle nicht lösbar.
+
+e) Neuer Helfer:  std::span
+
+std::span:
+
+a) Anfangsadresse
+b) Längenangabe (Elementen)
+
+=======================================================
+
+Noch ein Helfer:
+
+std::variant
+
+In einer std::variant Variablen können mehrere Werte unterschiedlichen
+Typs abgelegt werden, zu einem Zeitpunkt nur EIN Wert.
+
+Beispiel:
+
+Excel  // Google Sheets: Cell
+
+Zeichenkette
+num. Wert
+Datum 
+Uhrzeit
+Currency
+
+
+Einen  Variant kann man "besuchen" ;)
+
+=========================================
+
+Neues if:
+
+if zur Übersetzungszeit:
+
+=========================================
+
+Type-Rich Programming:  Clean
+
+==> Repertoire
+
+==> Man kann auch in C++ Eigenschaften von Typen abfragen.
+
+C++ Reflection
+
+==========================================
+==========================================
+
+Ja:     C++ ist (leider) eine wahnsinnig komplexe Sprache.
+
+Templates // auto
+
+Templates // auto als Parameter
+
+Nein:   Vertraut.
+
+Ist C++ eine Clean Programming Language.
+
+Man kann in C++ clean programmieren.
+
+Modern Aspekte => clean programmieren
+
+==========================================
+==========================================

@@ -8,10 +8,13 @@ void generic_functions();
 void book_store();
 void main_initializer_list();
 void main_weak_pointer();
+void main_array();
+void main_structured_binding();
+void main_variant();
 
 int main()
 {
-    main_weak_pointer();
+    main_variant();
     return 0;
 }
 

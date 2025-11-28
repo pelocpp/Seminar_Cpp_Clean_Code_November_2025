@@ -130,6 +130,9 @@
     <ClCompile Include="Topic_03_GenericFunctions.cpp" />
     <ClCompile Include="Topic_04_Initializer_List.cpp" />
     <ClCompile Include="Topic_05_Weak_Ptr.cpp" />
+    <ClCompile Include="Topic_06_Span.cpp" />
+    <ClCompile Include="Topic_07_ Structured_Binding.cpp" />
+    <ClCompile Include="Topic_08_StdVariant.cpp" />
     <ClCompile Include="Topic_10_Bookstore.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
