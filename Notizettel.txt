@@ -48,6 +48,12 @@ Besucher // Visitor
 
 RAII
 
+State
+
+Command 
+
+Observer
+
 =======================================================
 
 Clean Code C++
@@ -599,5 +605,195 @@ operator ++
 operator *
 operator ==
 
+=====================================================
+
+Um Benachrichtigungen zu erhalten, wenn Ereignisse eintreten.”
+
+Objekt:   State / Zustand / Änderungen.
+
+Beispiel: Wetterdaten  ==> Interesse
+
+Die sich für Änderungen interessieren  ...
+
+Nomenklatur:
+
+a) Objekt: State
+
+   Subject, Event Source, Observable
+
+b) Interessierten:
+
+   Event Client, Event Sink (Senke), Observer
+
+==> Ad Hoc:  Callback ...
+
+==> Verfeinerungen
+
+i) Klassisch (GoF)  // Interfaces
+
+ii) Reine C++:     std::function 
+
+===============================
+
+Änderung:
+
+update ==> Müssen ALLE Daten transportiert werden.
+
+update:   Info senden, was hat sich geändert
+
+Observer: Kann entscheiden, was er vmo Suibject holt ....
+
+==============================================================
+
+Command:
+
+Ich will an einem Objekt eine Methode aufrufen ... zu einem SPÄTEREN Zeitpunkt.
+
+Nicht synchron // asnchron
+
+Beispiel:
+
+a) ISR // Routine in einem hoch-prioren Kontext.
+
+   Wenn ein Ereignis im OS eintrifft ... da hat man keine Zeit für langwierige Methodenausführungen.
+
+   Es werden nur ALLE Infos für den Methodenaufruf abgespeichert (welches Zielobjekt, welche Methode, welche Parameter )
+
+b) BankKonto:
+
+   Die Aktualisierung eines Zielkontos erfolgt nachgelagert.
+
+c) Es werden nur ALLE Infos für den Methodenaufruf abgespeichert (welches Zielobjekt, welche Methode, welche Parameter )
+
+  Umsetzung:  Undo / Redo - Buffers.
+
+Kritik:
+
+== Das "konzeptionelle Beispiel" bewegt sich im GLEICHEN Thread.
+
+== Wenn Kommandos zeitverzögert aufgerufen werden sollen,
+   dann bin ich häufig in einem anderen Thread.
+
+==> Andere Idee:
+
+  Nachrichtenwartenschlange:  da kann man auch Methodenaufrufe ablegen ..
+
+  Praxis-nähere Umsetzung:
+
+  https://github.com/pelocpp/cpp_concurrency/blob/master/Programs/33_EventLoop/Readme.md
+
+  =======================================================================
+
+  STL Container
+  STL Iteratoren
+  STL Algorithmen
+
+  
+  =======================================================================
+
+     int m = a;  // void printer(int a)
+00007FF79A772C00  mov         eax,dword ptr [a]     <===
+00007FF79A772C06  mov         dword ptr [m],eax  
 
 
+    int m = a;  // void printer(int& a)
+00007FF68A192C01  mov         rax,qword ptr [a]     <===
+00007FF68A192C08  mov         eax,dword ptr [rax]   <===
+00007FF68A192C0A  mov         dword ptr [m],eax  
+
+
+for (int i = 0 ; i != 100000; ....) {
+   printer(i);   // Release: Ersten 4 Parameter: Registern.
+}
+
+void printer(std::string a)  // 40 bytes:  Kopiere oder als Referenz übergebe
+
+void printer(std::string& a)
+
+
+Hint / Empfehlung:
+
+Elem. Datentypen: Call-by_copy
+
+Objekte: Call-by-Referenz // Pointer // NOT: Call-by-Copy
+
+
+// ============================================
+
+Clean / Modern: Lambda   // C++ 11
+
+https://github.com/pelocpp/cpp_modern/blob/master/GeneralSnippets/Lambda/Lambda.md
+
+Einschub:
+
+Aufrufbares Objekt // Funktor:
+
+std::function ... 
+
+Funktor: (Mathematik)  // Aufrufbares Objekt:
+
+==> operator ()
+
+C++ Definition: Objekte einer Klasse, die den Operator operator() überlädt,
+bezeichnet man als aufrufbar.
+
+
+
+Was ist ein Lambda:
+
+A) Anschaulich:    Eine anonyme Funktion "inplace"
+
+                   Sie kann Variablen aus dem umgebenden Scope verwenden:
+
+                   Entweder als KOPIE oder via REFERENZ.
+
+B) Aus Sicht von C++: 
+
+   Ein Objekt einer anonymen Klasse, die den Operator operator() implementiert.
+
+                      Sie kann Variablen aus dem umgebenden Scope verwenden:
+
+                      Diese werden in dem Objekt der anonymen Klasse abgelegt:
+                      Als Kopie oder mit einer Referenz auf das Original.
+
+C) Bemerkung: Umgangssprachlich: "Ein Lambda ist eine Funktion"
+
+              FALSCH: Ein Lambda ist ein OBJEKT  ... hmmm : Von welcher Klasse / Typ ???
+
+Tool:   Cpp Insights
+
+Präcompiler: Modern C++ ==> Classic C++
+
+// -----------------
+
+Lambdas sind Objekte:
+
+Methoden und Membervariablen
+
+
+mutable:  C++ aus den ersten Tagen.
+
+==================================================
+
+auto:
+
+a) Vereinbarung von Variablen:
+
+   auto n = 123;
+
+b) Rückgabetyp von Methoden:
+
+    static auto test_09_helper_b() ...
+
+c) Als Parameter.
+
+==================================================
+
+Modern C++:
+
+Lambda, Gen. Funktionen:
+
+Vieles wird auf Vorhandenes umgesetzt.
+
+13.45
+=====

@@ -2,6 +2,7 @@
 #include <vector>
 #include <list>
 #include <print>
+#include <algorithm>
 
 #include <cstdint>
 
@@ -41,18 +42,34 @@ static void stl_01()
 
 }
 
+static void stl_auto()
+{
+    // auto
+
+    //var n;    // JavaScript
+
+    //m = 123;  // Python
+
+    // Typ wird zur Laufzeit ermittelt
+
+    auto a = 123.456f;   // Type Deduction // Typableitung
+}
+
 
 static void stl_02()
 {
-    std::vector<int> numbers;
-    //std::list<int> numbers;
+    // std::vector<int> numbers;
+    std::list<int> numbers;
 
     numbers.push_back(1);
     numbers.push_back(2);
     numbers.push_back(3);
 
     // Typ eines Iterators
-    std::vector<int>::iterator pos = numbers.begin();
+    //std::list<int>::iterator pos = numbers.begin();
+    // oder
+    auto pos = numbers.begin();
+
 
     if (pos == numbers.end()) {
         std::println("Done.");
@@ -62,7 +79,7 @@ static void stl_02()
     int value = *pos;
 
     // Für die Puristen // Clean Code
-    std::vector<int>::value_type value2 = *pos;
+   // std::vector<int>::value_type value2 = *pos;
 
     std::println("{}", value);
 
@@ -91,9 +108,34 @@ static void stl_02()
     // We can do absolutely better ..... clean
 }
 
+// the signature does not need to have const &.
+void printer(int& a)
+{
+    std::string s;
 
+    int m = a;
+
+    std::println("{}", a);
+}
+
+static void stl_03()
+{
+    //std::vector<int> numbers;
+    std::list<int> numbers;
+
+    numbers.push_back(1);
+    numbers.push_back(2);
+    numbers.push_back(3);
+
+    // STl-Algorithmus <=> Iteratoren  <=> Container
+    std::for_each(
+        numbers.begin(),
+        numbers.end(),
+        printer
+    );
+}
 
 void stl()
 {
-    stl_02();
+    stl_03();
 }

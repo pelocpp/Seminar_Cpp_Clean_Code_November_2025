@@ -3,10 +3,12 @@
 // ===========================================================================
 
 void stl();
+void lambdas();
+void generic_functions();
 
 int main()
 {
-    stl();
+    lambdas();
     return 0;
 }
 
